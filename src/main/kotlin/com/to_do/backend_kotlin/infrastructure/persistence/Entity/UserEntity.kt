@@ -5,6 +5,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 import java.time.LocalDateTime
 
@@ -30,6 +31,9 @@ class UserEntity {
 
     @Column(name = "created_at")
     var createdAt: LocalDateTime = LocalDateTime.now()
+
+    @OneToMany(mappedBy = "user")
+    var tasks: MutableList<TaskEntity> = mutableListOf()
 
 
 }

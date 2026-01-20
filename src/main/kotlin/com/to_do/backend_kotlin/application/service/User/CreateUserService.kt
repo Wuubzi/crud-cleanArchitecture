@@ -1,18 +1,21 @@
-package com.to_do.backend_kotlin.application.service
+package com.to_do.backend_kotlin.application.service.User
 
-import CreateUserUseCase
 import PasswordEncoderPort
+import User.CreateUserUseCase
 import UserRepositoryPort
 import com.to_do.backend_kotlin.domain.models.User
-import com.to_do.backend_kotlin.infrastructure.persistence.Entity.UserEntity
 import org.springframework.stereotype.Service
 
 @Service
 class CreateUserService(
     private val userRepositoryPort: UserRepositoryPort,
     private val passwordEncoderPort: PasswordEncoderPort
-):  CreateUserUseCase {
+): CreateUserUseCase {
     override fun createUser(user: User): User {
-       return userRepositoryPort.save(user)
+
+        val userPasswordEncode = user.copy(
+            password = passwordEncoderPort.encode(user.password)
+        )
+       return userRepositoryPort.save(userPasswordEncode)
     }
 }

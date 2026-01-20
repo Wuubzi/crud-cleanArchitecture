@@ -19,8 +19,9 @@ class JpaUserRepositoryAdapter(
         return userSaved.toDomain()
     }
 
-    override fun findByEmail(email: String): User? {
-        return springDataUserRepository.findByEmail(email)?.toDomain() ?: null
-    }
+    override fun findByEmail(email: String): User? = springDataUserRepository.findByEmail(email)?.toDomain()
+
+
+    override fun findById(id: Long): User? =  springDataUserRepository.findById(id).orElse(null)?.toDomain()
 
 }
